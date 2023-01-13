@@ -45,39 +45,37 @@ public class AltSmsAutofillPlugin implements FlutterPlugin, MethodCallHandler, A
     this.result = result;
     if (call.method.equals("listenForSms")) {
       checkPermission(activity);
-      if (!permissionGranted) {
-        ActivityCompat.requestPermissions(activity,
-                new String[]{Manifest.permission.RECEIVE_SMS},
-                myPermissionCode);
-      } else {
-        broadcastReceiver = new MySMSBroadcastReceive(new WeakReference<>(AltSmsAutofillPlugin.this));
-        broadcastReceiver.bindListener(smsListener);
-        activity.registerReceiver(broadcastReceiver,new IntentFilter(Telephony.Sms.Intents.SMS_RECEIVED_ACTION));
-
-      }
+//      if (!permissionGranted) {
+//        ActivityCompat.requestPermissions(activity,
+//                new String[]{Manifest.permission.RECEIVE_SMS},
+//                myPermissionCode);
+//      } else {
+//        broadcastReceiver = new MySMSBroadcastReceive(new WeakReference<>(AltSmsAutofillPlugin.this));
+//        broadcastReceiver.bindListener(smsListener);
+//        activity.registerReceiver(broadcastReceiver,new IntentFilter(Telephony.Sms.Intents.SMS_RECEIVED_ACTION));
+//      }
     } else  if(call.method.equals("unregisterListener")){
-      try {
-        activity.unregisterReceiver(broadcastReceiver);
-      } catch (Exception ex) {
-      }
-
+//      try {
+//        activity.unregisterReceiver(broadcastReceiver);
+//      } catch (Exception ex) {
+//      }
     }else{
       result.notImplemented();
     }
   }
 
-  private SmsListener smsListener = new SmsListener(){
-    @Override
-    public void messageReceived(String messages) {
-      result.success(messages);
-    }
-  };
-
-  private void checkPermission(Activity context) {
-    permissionGranted = ContextCompat.checkSelfPermission(context,
-            Manifest.permission.RECEIVE_SMS) ==
-            PackageManager.PERMISSION_GRANTED;
-  }
+//  private SmsListener smsListener = new SmsListener(){
+//    @Override
+//    public void messageReceived(String messages) {
+//      result.success(messages);
+//    }
+//  };
+//
+//  private void checkPermission(Activity context) {
+//    permissionGranted = ContextCompat.checkSelfPermission(context,
+//            Manifest.permission.RECEIVE_SMS) ==
+//            PackageManager.PERMISSION_GRANTED;
+//  }
   @Override
   public void onDetachedFromEngine(@NonNull FlutterPluginBinding binding) {
     channel.setMethodCallHandler(null);
@@ -110,47 +108,47 @@ public class AltSmsAutofillPlugin implements FlutterPlugin, MethodCallHandler, A
   public boolean onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
     if (requestCode == 1 && grantResults.length > 0
             && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-      broadcastReceiver = new MySMSBroadcastReceive(new WeakReference<>(AltSmsAutofillPlugin.this));
-      broadcastReceiver.bindListener(smsListener);
-      activity.registerReceiver(broadcastReceiver,new IntentFilter(Telephony.Sms.Intents.SMS_RECEIVED_ACTION));      return true;
+//      broadcastReceiver = new MySMSBroadcastReceive(new WeakReference<>(AltSmsAutofillPlugin.this));
+//      broadcastReceiver.bindListener(smsListener);
+//      activity.registerReceiver(broadcastReceiver,new IntentFilter(Telephony.Sms.Intents.SMS_RECEIVED_ACTION));      return true;
     } else {
       return false;
     }
   }
 
 
-  private static class MySMSBroadcastReceive extends BroadcastReceiver {
-    private static SmsListener mListener;
-    final WeakReference<AltSmsAutofillPlugin> plugin;
-
-    private MySMSBroadcastReceive(WeakReference<AltSmsAutofillPlugin> plugin) {
-      this.plugin = plugin;
-    }
-
-    @Override
-    public void onReceive(Context context, Intent intent) {
-      if(Telephony.Sms.Intents.SMS_RECEIVED_ACTION.equals(intent.getAction())){
-        if (plugin.get() == null) {
-          return;
-        } else {
-          plugin.get().activity.unregisterReceiver(this);
-        }
-        SmsMessage[] messages = Telephony.Sms.Intents.getMessagesFromIntent(intent);
-        String concatMsg="";
-        for (SmsMessage sms : messages){
-          String message = sms.getMessageBody();
-          concatMsg = concatMsg + message;
-        }
-        mListener.messageReceived(concatMsg);
-
-      }
-
-
-    }
-
-    public void bindListener(SmsListener listener) {
-      mListener = listener;
-    }
-  }
+//  private static class MySMSBroadcastReceive extends BroadcastReceiver {
+//    private static SmsListener mListener;
+//    final WeakReference<AltSmsAutofillPlugin> plugin;
+//
+//    private MySMSBroadcastReceive(WeakReference<AltSmsAutofillPlugin> plugin) {
+//      this.plugin = plugin;
+//    }
+//
+//    @Override
+//    public void onReceive(Context context, Intent intent) {
+//      if(Telephony.Sms.Intents.SMS_RECEIVED_ACTION.equals(intent.getAction())){
+//        if (plugin.get() == null) {
+//          return;
+//        } else {
+//          plugin.get().activity.unregisterReceiver(this);
+//        }
+//        SmsMessage[] messages = Telephony.Sms.Intents.getMessagesFromIntent(intent);
+//        String concatMsg="";
+//        for (SmsMessage sms : messages){
+//          String message = sms.getMessageBody();
+//          concatMsg = concatMsg + message;
+//        }
+//        mListener.messageReceived(concatMsg);
+//
+//      }
+//
+//
+//    }
+//
+//    public void bindListener(SmsListener listener) {
+//      mListener = listener;
+//    }
+//  }
 }
 
