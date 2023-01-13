@@ -31,7 +31,7 @@ public class AltSmsAutofillPlugin implements FlutterPlugin, MethodCallHandler, A
   private int myPermissionCode = 1;
   private boolean permissionGranted = false;
   private Result result;
-  private MySMSBroadcastReceive broadcastReceiver;
+//  private MySMSBroadcastReceive broadcastReceiver;
 
 
   @Override
@@ -44,7 +44,7 @@ public class AltSmsAutofillPlugin implements FlutterPlugin, MethodCallHandler, A
   public void onMethodCall(@NonNull MethodCall call, @NonNull final Result result) {
     this.result = result;
     if (call.method.equals("listenForSms")) {
-      checkPermission(activity);
+//      checkPermission(activity);
 //      if (!permissionGranted) {
 //        ActivityCompat.requestPermissions(activity,
 //                new String[]{Manifest.permission.RECEIVE_SMS},
