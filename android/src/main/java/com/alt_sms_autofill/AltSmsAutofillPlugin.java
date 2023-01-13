@@ -106,14 +106,15 @@ public class AltSmsAutofillPlugin implements FlutterPlugin, MethodCallHandler, A
 
   @Override
   public boolean onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-    if (requestCode == 1 && grantResults.length > 0
-            && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+//    if (requestCode == 1 && grantResults.length > 0
+//            && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
 //      broadcastReceiver = new MySMSBroadcastReceive(new WeakReference<>(AltSmsAutofillPlugin.this));
 //      broadcastReceiver.bindListener(smsListener);
 //      activity.registerReceiver(broadcastReceiver,new IntentFilter(Telephony.Sms.Intents.SMS_RECEIVED_ACTION));      return true;
-    } else {
-      return false;
-    }
+//    } else {
+//      return false;
+//    }
+    return false;
   }
 
 
