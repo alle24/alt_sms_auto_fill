@@ -30,7 +30,7 @@ import io.flutter.plugin.common.PluginRegistry;
 
 
 /** AltSmsAutofillPlugin */
-public class AltSmsAutofillPlugin implements FlutterPlugin, MethodCallHandler, ActivityAware, PluginRegistry.RequestPermissionsResultListener{
+public class AltSmsAutofillPlugin implements FlutterPlugin, MethodCallHandler, ActivityAware {
 
   private MethodChannel channel;
   private Activity activity;
@@ -104,7 +104,7 @@ public class AltSmsAutofillPlugin implements FlutterPlugin, MethodCallHandler, A
     mySMSReceiver.bindListener(new SmsListener() {
       @Override
       public void messageReceived(String message) {
-        result.success(messages);
+        result.success(message);
       }
     });
     activity.registerReceiver(mySMSReceiver, mySMSReceiver.doFilter());
