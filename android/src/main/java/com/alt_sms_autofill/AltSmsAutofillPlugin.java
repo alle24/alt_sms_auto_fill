@@ -1,24 +1,14 @@
 package com.alt_sms_autofill;
 
-import android.Manifest;
 import android.app.Activity;
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
-import android.content.pm.PackageManager;
-import android.provider.Telephony;
-import android.telephony.SmsMessage;
 import androidx.annotation.NonNull;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 
 import com.google.android.gms.auth.api.phone.SmsRetriever;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 
-import java.lang.ref.WeakReference;
+import io.flutter.Log;
 import io.flutter.embedding.engine.plugins.FlutterPlugin;
 import io.flutter.embedding.engine.plugins.activity.ActivityAware;
 import io.flutter.embedding.engine.plugins.activity.ActivityPluginBinding;
@@ -26,7 +16,6 @@ import io.flutter.plugin.common.MethodCall;
 import io.flutter.plugin.common.MethodChannel;
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler;
 import io.flutter.plugin.common.MethodChannel.Result;
-import io.flutter.plugin.common.PluginRegistry;
 
 
 /** AltSmsAutofillPlugin */
@@ -34,8 +23,6 @@ public class AltSmsAutofillPlugin implements FlutterPlugin, MethodCallHandler, A
 
   private MethodChannel channel;
   private Activity activity;
-  private int myPermissionCode = 1;
-  private boolean permissionGranted = false;
   private Result result;
   private MySMSReceiver mySMSReceiver;
 
@@ -89,14 +76,14 @@ public class AltSmsAutofillPlugin implements FlutterPlugin, MethodCallHandler, A
     task.addOnSuccessListener(new OnSuccessListener() {
       @Override
       public void onSuccess(Object o) {
-
+        Log.v("AltSmsAutoFillPlugin", "SmsRetriever onSuccess " + o);
       }
     });
 
     task.addOnFailureListener(new OnFailureListener() {
       @Override
       public void onFailure(@NonNull Exception e) {
-
+        Log.v("AltSmsAutoFillPlugin", "SmsRetriever onFailure " + e.getLocalizedMessage());
       }
     });
 
